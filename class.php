@@ -28,7 +28,7 @@ class ImportExport {
 
         if (file_exists($file_temp) && filemtime($file_temp) > $_SERVER['REQUEST_TIME'] - 3600) {
 
-            return file_get_contents($file_temp);
+            return \file_get_contents($file_temp);
 
             // echo '<Br/>готовый кеш';
         } else {
@@ -39,9 +39,9 @@ class ImportExport {
             $d['cash_creat_time'] = $_SERVER['REQUEST_TIME'];
             $d['cash_creat_dt'] = date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']);
 
-            $e = json_encode($d);
+            $e = \json_encode($d);
 
-            file_put_contents($file_temp, json_encode($d));
+            \file_put_contents($file_temp, json_encode($d));
 
             // die($e);
             return $e;
@@ -56,14 +56,14 @@ class ImportExport {
 
         if (file_exists($file_temp) && filemtime($file_temp) > $_SERVER['REQUEST_TIME'] - 3600 * 24) {
 
-            return json_decode(file_get_contents($file_temp));
+            return \json_decode(\file_get_contents($file_temp));
         } else {
 
             if (file_exists($file_temp))
                 unlink($file_temp);
 
             $new_file = self::saveDump($site, $module);
-            return $new_file === false ? false : json_decode(file_get_contents($file_temp));
+            return $new_file === false ? false : \json_decode(\file_get_contents($file_temp));
         }
     }
 
@@ -71,7 +71,7 @@ class ImportExport {
 
         $file_temp = DR . DS . self::$folder_temp . DS . 'dump.' . \f\translit($module, 'uri2') . '.loaded.dump.json';
 
-        file_put_content($file_temp . '.temp', file_get_contents('http://' . $site . '/didrive-api/importexport/1/action=get_items&module=' . $module));
+        \file_put_content($file_temp . '.temp', file_get_contents('http://' . $site . '/didrive-api/importexport/1/action=get_items&module=' . $module));
 
         if (filesize($file_temp . '.temp') > 0) {
 
