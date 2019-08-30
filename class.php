@@ -71,7 +71,7 @@ class ImportExport {
 
         $file_temp = DR . DS . self::$folder_temp . DS . 'dump.' . \f\translit($module, 'uri2') . '.loaded.dump.json';
 
-        \file_put_content($file_temp . '.temp', file_get_contents('http://' . $site . '/didrive-api/importexport/1/action=get_items&module=' . $module));
+        \file_put_content($file_temp . '.temp', \file_get_contents('http://' . $site . '/didrive-api/importexport/1/action=get_items&module=' . $module));
 
         if (filesize($file_temp . '.temp') > 0) {
 
