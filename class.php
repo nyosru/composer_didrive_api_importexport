@@ -9,6 +9,13 @@ if (!defined('IN_NYOS_PROJECT'))
     <a href="http://www.uralweb.info" target="_blank">Создание, дизайн, вёрстка и программирование сайтов.</a><br />
     <a href="http://www.nyos.ru" target="_blank">Только отдельные услуги: Дизайн, вёрстка и программирование сайтов.</a>');
 
+
+if (!is_dir(DR . DS . '0.temp')) {
+    mkdir(DR . DS . '0.temp', 0755);
+    echo DR . DS . '0.temp';
+}
+
+
 //echo __FILE__;
 
 class ImportExport {
