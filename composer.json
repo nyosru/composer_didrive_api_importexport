@@ -1,7 +1,7 @@
 {
     "name": "didrive_api/importexport",
     "description": "Модуль для Didrive - импорт экспорт данных",
-    "version": "0.0.7",
+    "version": "0.0.8",
 
     "keywords": [
         "didrive",
