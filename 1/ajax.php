@@ -9,6 +9,20 @@ define('IN_NYOS_PROJECT', true);
 require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
 require( $_SERVER['DOCUMENT_ROOT'] . '/all/ajax.start.php' );
 
+
+if( isset($_REQUEST['action']) && $_REQUEST['action'] == 'get_items' ){
+
+    if( !empty($_REQUEST['module']) ){
+
+    die( \Nyos\api\ImportExport::getDump( $db, $_REQUEST['module'] ) );
+
+    }
+
+}
+
+
+
+
 if (1 == 2) {
 //require_once( DR.'/vendor/didrive/base/class/Nyos.php' );
 //require_once( dirname(__FILE__).'/../class.php' );
