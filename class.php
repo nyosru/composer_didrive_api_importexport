@@ -9,13 +9,6 @@ if (!defined('IN_NYOS_PROJECT'))
     <a href="http://www.uralweb.info" target="_blank">Создание, дизайн, вёрстка и программирование сайтов.</a><br />
     <a href="http://www.nyos.ru" target="_blank">Только отдельные услуги: Дизайн, вёрстка и программирование сайтов.</a>');
 
-
-if (!is_dir(DR . DS . '0.temp')) {
-    mkdir(DR . DS . '0.temp', 0755);
-    echo DR . DS . '0.temp';
-}
-
-
 //echo __FILE__;
 
 class ImportExport {
@@ -27,6 +20,12 @@ class ImportExport {
      * @return type
      */
     public static function getDump($db, $module) {
+
+        if (!is_dir(DR . DS . self::$folder_temp)) {
+            mkdir(DR . DS . self::$folder_temp, 0755);
+            echo DR . DS . self::$folder_temp;
+        }
+
 
         $action = 'get_items';
 
@@ -58,6 +57,11 @@ class ImportExport {
 
     public static function getLocalDump($site, $module) {
 
+        if (!is_dir(DR . DS . self::$folder_temp)) {
+            mkdir(DR . DS . self::$folder_temp, 0755);
+            echo DR . DS . self::$folder_temp;
+        }
+
 
         $file_temp = DR . DS . self::$folder_temp . DS . 'dump.' . \f\translit($module, 'uri2') . '.loaded.dump.json';
 
@@ -75,6 +79,12 @@ class ImportExport {
     }
 
     public static function saveDump($site, $module) {
+
+        if (!is_dir(DR . DS . self::$folder_temp)) {
+            mkdir(DR . DS . self::$folder_temp, 0755);
+            echo DR . DS . self::$folder_temp;
+        }
+
 
         $file_temp = DR . DS . self::$folder_temp . DS . 'dump.' . \f\translit($module, 'uri2') . '.loaded.dump.json';
 
