@@ -21,6 +21,12 @@ class ImportExport {
      */
     public static function getDump($db, $module) {
 
+        if (!is_dir(DR . DS . self::$folder_temp)) {
+            mkdir(DR . DS . self::$folder_temp, 0755);
+            echo DR . DS . self::$folder_temp;
+        }
+
+
         $action = 'get_items';
 
         $file_temp = DR . DS . self::$folder_temp . DS . 'dump.' . $action . '.' . \f\translit($module, 'uri2') . '.dump.json';
@@ -28,7 +34,7 @@ class ImportExport {
 
         if (file_exists($file_temp) && filemtime($file_temp) > $_SERVER['REQUEST_TIME'] - 3600) {
 
-            return file_get_contents($file_temp);
+            return \file_get_contents($file_temp);
 
             // echo '<Br/>готовый кеш';
         } else {
@@ -39,9 +45,9 @@ class ImportExport {
             $d['cash_creat_time'] = $_SERVER['REQUEST_TIME'];
             $d['cash_creat_dt'] = date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']);
 
-            $e = json_encode($d);
+            $e = \json_encode($d);
 
-            file_put_contents($file_temp, json_encode($d));
+            \file_put_contents($file_temp, json_encode($d));
 
             // die($e);
             return $e;
@@ -51,31 +57,45 @@ class ImportExport {
 
     public static function getLocalDump($site, $module) {
 
+        if (!is_dir(DR . DS . self::$folder_temp)) {
+            mkdir(DR . DS . self::$folder_temp, 0755);
+            echo DR . DS . self::$folder_temp;
+        }
+
 
         $file_temp = DR . DS . self::$folder_temp . DS . 'dump.' . \f\translit($module, 'uri2') . '.loaded.dump.json';
 
         if (file_exists($file_temp) && filemtime($file_temp) > $_SERVER['REQUEST_TIME'] - 3600 * 24) {
 
-            return json_decode(file_get_contents($file_temp));
+            return \json_decode(\file_get_contents($file_temp), true );
         } else {
 
             if (file_exists($file_temp))
                 unlink($file_temp);
 
             $new_file = self::saveDump($site, $module);
-            return $new_file === false ? false : json_decode(file_get_contents($file_temp));
+            
+            return $new_file === false ? false : \json_decode(\file_get_contents($new_file), true);
         }
     }
 
     public static function saveDump($site, $module) {
 
+        if (!is_dir(DR . DS . self::$folder_temp)) {
+            mkdir(DR . DS . self::$folder_temp, 0755);
+            echo DR . DS . self::$folder_temp;
+        }
+
+
         $file_temp = DR . DS . self::$folder_temp . DS . 'dump.' . \f\translit($module, 'uri2') . '.loaded.dump.json';
 
-        file_put_content($file_temp . '.temp', file_get_contents('http://' . $site . '/didrive-api/importexport/1/action=get_items&module=' . $module));
+        \file_put_contents($file_temp . '.temp', \file_get_contents('https://' . $site . '/didrive-api/importexport/1/action=get_items&module=' . $module));
 
         if (filesize($file_temp . '.temp') > 0) {
 
+            if( file_exists($file_temp) )
             unlink($file_temp);
+            
             rename($file_temp . '.temp', $file_temp);
 
             return $file_temp;
