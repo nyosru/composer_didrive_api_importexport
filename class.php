@@ -67,14 +67,15 @@ class ImportExport {
 
         if (file_exists($file_temp) && filemtime($file_temp) > $_SERVER['REQUEST_TIME'] - 3600 * 24) {
 
-            return \json_decode(\file_get_contents($file_temp));
+            return \json_decode(\file_get_contents($file_temp), true );
         } else {
 
             if (file_exists($file_temp))
                 unlink($file_temp);
 
             $new_file = self::saveDump($site, $module);
-            return $new_file === false ? false : \json_decode(\file_get_contents($file_temp));
+            
+            return $new_file === false ? false : \json_decode(\file_get_contents($new_file), true);
         }
     }
 
@@ -92,7 +93,9 @@ class ImportExport {
 
         if (filesize($file_temp . '.temp') > 0) {
 
+            if( file_exists($file_temp) )
             unlink($file_temp);
+            
             rename($file_temp . '.temp', $file_temp);
 
             return $file_temp;
