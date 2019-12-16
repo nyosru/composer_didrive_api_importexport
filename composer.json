@@ -1,7 +1,7 @@
 {
     "name": "didrive_api/importexport",
     "description": "Модуль для Didrive - импорт экспорт данных",
-    "version": "0.0.10",
+    "version": "0.0.11",
 
     "keywords": [
         "didrive",
@@ -30,6 +30,7 @@
     "autoload": {
         "files": [ 
             "class.php"
-        ]    
+        ]
     }
+
 }
